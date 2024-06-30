@@ -1,27 +1,29 @@
-def main():
+def get_task_info():
     task = input("Enter your task: ")
-    priority = input("Priority (high/medium/low): ").strip().lower()
-    time_bound = input("Is it time-bound? (yes/no): ").strip().lower()
-
+    priority = input("Priority (high/medium/low): ").lower()
+    time_bound = input("Is it time-bound? (yes/no): ").lower()
+    return task, priority, time_bound
+def provide_reminder(task, priority, time_bound):
+    reminder = f"Reminder: '{task}' is a {priority} priority task."
     match priority:
-      case 'high':
-       reminder = f"Reminder: '{task}' is a high priority task"
-      case 'medium':
-       reminder = f"Reminder: '{task}' is a medium priority task"
-      case 'low':
-       reminder = f"Reminder: '{task}' is a low priority task"
-      case _:
-       reminder = f"Reminder: '{task}' has an unspecified priority"
-
-    if time_bound == 'yes':
-      reminder += " that requires immediate attention today!"
-    elif time_bound == 'no':
-      reminder += ". Consider completing it when you have free time."
-    else:
-      reminder += ". Time-bound status unspecified."
-
+        case "high":
+            if time_bound == "yes":
+                reminder += " It requires immediate attention today!"
+            else:
+                reminder += " Consider completing it as soon as possible."
+        case "medium":
+            if time_bound == "yes":
+                reminder += " It should be completed today."
+            else:
+                reminder += " Try to complete it within the next few days."
+        case "low":
+            if time_bound == "yes":
+                reminder += " Try to complete it today if possible."
+            else:
+                reminder += " Consider completing it when you have free time."
+        case _:
+            reminder += " Note: Invalid priority level provided."
     print(reminder)
-
 if __name__ == "__main__":
-    main()
-
+    task, priority, time_bound = get_task_info()
+    provide_reminder(task, priority, time_bound)
